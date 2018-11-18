@@ -26,7 +26,7 @@ class PositionState:
             new_dev = np.linalg.norm(new_pos - self.pos)
             old_dev = self.dev
             if new_dev < 3*old_dev:
-                # Got a good value 
+                # Got a good value
                 # If this condition fails, drop the position but still update the deviation
                 self.pos = (1-self.alpha)*self.pos + self.alpha*new_pos
             self.dev = (1-self.beta)*old_dev + self.beta*new_dev
@@ -43,7 +43,7 @@ class PositionState:
     def y(self):
         return self.pos[1]
 
- 
+
 class State(threading.Thread):
     def __init__(self, pozyx_offset, lencoder, rencoder, wheel_width=150.5):
         super(State, self).__init__()
@@ -57,14 +57,14 @@ class State(threading.Thread):
         self.KF = KalmanFilter(dim_x=8, dim_z=8)
         self.KF.x = np.array([0,]*8).T
         # Will be defined each iteration
-        # self.KF.F = 
-        # self.KF.Q = 
+        # self.KF.F =
+        # self.KF.Q =
         self.KF.H = np.eye(8)  # No measurements need to be transformed
-        self.KF.P = np.eye(8) * 500 
+        self.KF.P = np.eye(8) * 500
         R_vel = 10*(self.rencoder.step+self.lencoder.step)
         R_accel = 100 # 2*10
         self.KF.R = np.square(np.diag([150/2, R_vel, R_accel, 30/2, R_vel, R_accel, np.pi/180, R_vel/(np.pi*self.wheel_width)]))
-        
+
         self.lock = threading.Lock()
         self.daemon = True
         self.stop = False
@@ -96,7 +96,7 @@ class State(threading.Thread):
         return wrapped_prop
 
     def run(self):
-        last_state_read = time.time() 
+        last_state_read = time.time()
         c = 0
         while not self.stop:
             state = self.memcached_client.get('state')
@@ -141,7 +141,7 @@ class State(threading.Thread):
                 self.heading = self._state[6]
                 self.location = (self._state[0], self._state[3])
                 last_state_read = now
-                #if c % 5 == 0: 
+                #if c % 5 == 0:
                     #print(f'{dt:.6f}: {x} {dx:6f} {d2x:6f} {y} {dy:6f} {d2y:6f} {heading:.6f} {dheading}')
                     #print(self)
                 c += 1
@@ -166,9 +166,9 @@ class State(threading.Thread):
             R = 0
         ICC = np.array([-R*np.sin(heading), R*np.cos(heading), 0]).T
         A = np.array([
-            [np.cos(wdt), -np.sin(wdt), 0], 
-            [np.sin(wdt), np.cos(wdt), 0], 
-            [0, 0, 1], 
+            [np.cos(wdt), -np.sin(wdt), 0],
+            [np.sin(wdt), np.cos(wdt), 0],
+            [0, 0, 1],
         ])
         res = A @ ICC + (ICC + np.array([0, 0, wdt]).T)
         res /= dt
@@ -200,4 +200,3 @@ class State(threading.Thread):
 
     def __str__(self):
         return f'State: Heading:{self.heading} Location:{self.location}'
-

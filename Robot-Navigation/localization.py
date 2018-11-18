@@ -57,7 +57,7 @@ class Localization:
                 text = data.decode().strip()
             except UnicodeDecodeError:
                 break
-            
+
             if text.lower() == 'done':
                 resp.status = falcon.HTTP_200
             else:
@@ -65,4 +65,3 @@ class Localization:
         else:
             # UAV
             pass
-

@@ -67,7 +67,7 @@ class Robot:
         #  is mounted forward of the center of the wheels
         cor_heading = normalize_angle(heading + pi)
         # Current location of the center of rotation
-        cor_location = location + self.pozyx_to_cor * np.array([np.cos(cor_heading), np.sin(cor_heading)]) 
+        cor_location = location + self.pozyx_to_cor * np.array([np.cos(cor_heading), np.sin(cor_heading)])
         offset = cor_location - waypoint
         target_heading = atan2(offset[1], offset[0])
         return normalize_angle(target_heading - pi)
@@ -125,7 +125,7 @@ class Robot:
         else:
             self.brake()
             return location
-    
+
     @waypoint_as_np_array
     def nav2waypoint2(self, waypoint, MOE_heading=pi/180, MOE_location=100, speed=25, correction=1):
         self.rotate2heading(self.waypoint_heading(waypoint), MOE_heading)
@@ -256,7 +256,7 @@ if __name__ == "__main__":
 
                 print(f'Received: {text} from {addr}')
 
-                if ':' in text
+                if ':' in text:
                     try:
                         command, value = text.split(':')
                     except ValueError:
@@ -290,14 +290,14 @@ if __name__ == "__main__":
         elif len(sys.argv) == 1:
             #r.rotate2heading(r.waypoint_heading(waypoint))
             #waypoint_heading = r.waypoint_heading(waypoint)
-            #r.rotate2heading(waypoint_heading) 
+            #r.rotate2heading(waypoint_heading)
             #r.rotate2heading(0,pi/180)
             print(r.nav2waypoint(waypoint, correction=1))
             time.sleep(4)
             print(r.nav2waypoint((2200, 6000), correction=1))
             time.sleep(4)
             print(r.nav2waypoint((2900, 5500), correction=1))
-            #r.rotate(30,100) 
+            #r.rotate(30,100)
             #r.nav2waypoint2(waypoint)
         elif len(sys.argv) == 2 and sys.argv[1] == 'adv':
             print(r.nav2waypoint2(waypoint, correction=1))
@@ -309,4 +309,3 @@ if __name__ == "__main__":
         print(traceback.format_exc())
         print(e)
     cleanup_and_exit(state)
-    
