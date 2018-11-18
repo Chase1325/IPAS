@@ -9,11 +9,11 @@ from Search import Astar, reconstruct_path
 
 
 def main():
-    env = XYEnvironment(x_size=10, y_size=10, x_pts=30, y_pts=30)
+    env = XYEnvironment(x_size=10, y_size=10, n_grid_x=30, n_grid_y=30)
 
     threat1 = GaussThreat(location=(2, 2), shape=(0.5, 0.5), intensity=5)
-    threat2 = GaussThreat(location=(8, 8), shape=(1.0, 1.0), intensity=5)
-    threat3 = GaussThreat(location=(8, 2), shape=(1.5, 1.5), intensity=5)
+    threat2 = GaussThreat(location=(6, 5), shape=(1.0, 1.0), intensity=5)
+    threat3 = GaussThreat(location=(8, 2), shape=(.25, .5), intensity=10)
     threats = [threat1, threat2, threat3]
 
     threat_field = GaussThreatField(threats=threats, offset=2)

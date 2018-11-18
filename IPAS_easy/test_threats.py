@@ -8,7 +8,7 @@ from Visualize import draw_threat_field, draw_threat_field_2D
 
 
 def main():
-    env = XYEnvironment(x_size=10, y_size=10, x_pts=20, y_pts=20)
+    env = XYEnvironment(x_size=10, y_size=10, n_grid_x=20, n_grid_y=20)
 
     threat1 = GaussThreat(location=(2, 2), shape=(0.5, 0.5), intensity=5)
     threat2 = GaussThreat(location=(8, 8), shape=(1.0, 1.0), intensity=5)

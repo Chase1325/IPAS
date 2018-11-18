@@ -24,7 +24,7 @@ def draw_threat_field(env, threat_field, x_res=100, y_res=100, colorbar=True):
     Z = threat_field.threat_value(X, Y)
 
     # Plot the surface
-    surf = ax.plot_surface(X, Y, Z, cmap=cm.gray, linewidth=0, antialiased=False)
+    surf = ax.plot_surface(X, Y, Z, cmap=cm.jet, linewidth=0, antialiased=False)
 
     # Customize the z axis
     # ax.set_zlim(-1.01, 1.01)
@@ -46,7 +46,7 @@ def draw_threat_field_2D(env, threat_field, ax=None, x_res=100, y_res=100, color
 
     This function is useful for later plotting the path on top"""
     if not ax:
-        plt, ax = plt.subplots(1, 1)
+        plot, ax = plt.subplots(1, 1)
 
     # Make data
     X = np.linspace(0, env.x_size, x_res)
@@ -55,7 +55,7 @@ def draw_threat_field_2D(env, threat_field, ax=None, x_res=100, y_res=100, color
 
     Z = threat_field.threat_value(X, Y)
 
-    pcol = ax.pcolor(X, Y, Z, cmap=cm.gray)
+    pcol = ax.pcolor(X, Y, Z, cmap=cm.jet)
     if colorbar:
         plt.colorbar(pcol)
     #plt.show(block=False)

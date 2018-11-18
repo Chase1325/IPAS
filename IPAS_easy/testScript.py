@@ -1,4 +1,4 @@
-import sim_ipas as ipas 
+import sim_ipas as ipas
 import Environment as Env
 import Threat
 import numpy as np
@@ -53,15 +53,15 @@ def main():
                 intensity = int(values[3])
                 threats.append(
                     Threat.GaussThreat(
-                        location=(x, y), 
-                        shape=(shape, shape), 
+                        location=(x, y),
+                        shape=(shape, shape),
                         intensity=intensity,
                     )
                 )
                 print(threats[-1])
     else:
         with open('/tmp/last_threat_field.csv', 'w') as outfile:
-            for i in range(args.threats): 
+            for i in range(args.threats):
                 min_dim = min(args.x, args.y)
                 x = r.randint(0, args.x)
                 y = r.randint(0, args.y)
@@ -69,8 +69,8 @@ def main():
                 intensity = r.randint(min_dim//2, 5*min_dim)
                 threats.append(
                     Threat.GaussThreat(
-                        location=(x, y), 
-                        shape=(shape, shape), 
+                        location=(x, y),
+                        shape=(shape, shape),
                         intensity=intensity,
                     )
                 )
@@ -102,9 +102,9 @@ def main():
         #ipas2pozyx = IPAS2Pozyx()
         ipas2pozyx = IPAS2PozyxDummy()
         Ipas = ipas.IPAS(
-            env, 
-            sensors, 
-            sensor_noise=1, 
+            env,
+            sensors,
+            sensor_noise=1,
             position_converter=ipas2pozyx,
             wait_to_continue=True,
         )
@@ -122,10 +122,10 @@ def main():
         # Plot the threat field as 2D heat map and add path on top
         draw_path(ax, path)
 
-    if args.optimal: 
+    if args.optimal:
         draw_path(ax, AstarPath(env, (0,0), (args.x, args.y)), color='yellow')
 
-    with open('/home/roger/share/my_fig_path.png', 'wb') as outfile: 
+    with open('/home/roger/share/my_fig_path.png', 'wb') as outfile:
         plt.gcf().canvas.print_png(outfile)
 
     plt.show()
