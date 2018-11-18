@@ -1,0 +1,18 @@
+    def reconfigure_sensors_easy(self, path, intensity=5, reduced_parameters=None):
+        if reduced_parameters == None:
+            reduced_parameters = self.sensor_count
+        distance_max = []
+        for threat in self.threat_locations:
+            distances = []
+            for node in path:
+                distances.append((threat[0]-node.pos_x)**2+(threat[1]-node.pos_y)**2)
+            distance_max.append(max(distances))
+        indx = np.argsort(distance_max)
+        reduced_indx = indx[:reduced_parameters]
+        # reduced_indx = indx[:reduced_parameters]
+        print(reduced_indx)
+        basis_grid_list = "points close to basis threats ordered by proximity to basis threats"
+        new_sensor_positions = []
+        for i in range(self.sensor_count):
+            new_sensor_positions.append(self.threat_locations[reduced_indx[i]])
+        return new_sensor_positions
