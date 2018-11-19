@@ -45,12 +45,11 @@ def split_and_skew(file, projectors, width1, width2, d):
 
 
 if __name__ == '__main__':
-    d = '/home/roger/share'
-    f = d + '/my_fig.png'
-    f_new = d + '/my_fig_flip.png'
+    d = 'C:\RESEARCH\Code\IPAS\Figs'
+    f = d + '\my_fig.png'
+    f_new = d + '\my_fig_flip.png'
     img = Image.open(f)
     img = img.rotate(90, expand=True)
     img.save(f_new)
     img.close()
     split_and_skew(f_new, 2, 9.5, 10, d)
-

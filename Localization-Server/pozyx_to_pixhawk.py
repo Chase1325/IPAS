@@ -23,6 +23,9 @@ from threading import Thread, Lock
 
 from pozyx2gps import Pozyx2GPSConverter
 
+#RUN THIS FILE AS THE MAIN FOR DRONE
+
+
 
 DEBUG = False
 
@@ -185,10 +188,10 @@ class SerialInterface:
         # Sanity check
         if data_len < 1:
             return
-        
+
         # Message is data length + 1 for checksum
         msg_len = ctypes.c_uint8(data_len + 1)
-        
+
         # Calc checksum and place in last element of array
         checksum = ctypes.c_uint8(0)
         checksum.value ^= msg_id.value
@@ -479,7 +482,7 @@ class PozyxPositionProcess(Process):
         self.pozyx.print_configuration_result()
 
         self.pozyx_pos_generator = position_generator(self.pozyx, self.IS_UAV)
-        
+
         self.sensor_data = SensorData()
         self.tmp_sensor_data = SensorData()
         self.sensor_calibration_status = SingleRegister()
@@ -545,8 +548,8 @@ class PozyxPositionProcess(Process):
                 # Force a reset
                 loops_wo_positioning = 999
 
-            can_position = self.client.can_position 
-            
+            can_position = self.client.can_position
+
             if loops_wo_positioning > 50 and not can_position:
                 # Break a stalemate condition
                 if self.client.has_client and self.server:
@@ -568,7 +571,7 @@ class PozyxPositionProcess(Process):
                         # Failed to send to next client
                         if DEBUG: print('Failed to send go')
                         loops_wo_server = 999
-            
+
                 loops_wo_positioning = 0
             else:
                 # On off loops, ping our server
@@ -591,7 +594,7 @@ class PozyxPositionProcess(Process):
                 data = self.comms.recv()
                 if data == 'stop':
                     self.stop = True
-                elif data: 
+                elif data:
                     self.comms.send((self.pos, self.pos_error, self.rngs, deepcopy(self.sensor_data)))
             time.sleep(self.postimeout)
 
@@ -621,7 +624,7 @@ class PozyxPositionProcess(Process):
                 break
 
             try:
-                ip = self.ip_base.format(current_host) 
+                ip = self.ip_base.format(current_host)
                 server.connect((ip, self.server_port))
             except socket.error as e:
                 continue
@@ -655,10 +658,10 @@ class RangeFinderProcess(Process):
         b = connection.read(1)
         num = b''
         while b != b'\r':
-            num += b 
-            b = connection.read(1) 
-        if connection.in_waiting > 10: 
-            connection.flush() 
+            num += b
+            b = connection.read(1)
+        if connection.in_waiting > 10:
+            connection.flush()
         return int(num.decode()) // 10
 
     def run(self):
@@ -695,9 +698,9 @@ class RangeFinderProcess(Process):
                     raw_range,	# Current distance, must be int
                     1,		# 0=Laser 1=Ultrasound 2=Infared 3=Radar 4=Unknown
                     0,		# Onboard ID, not used
-                    # Must be set to a MAV_SENSOR_ROTATION_PITCH_270 for mavlink 
+                    # Must be set to a MAV_SENSOR_ROTATION_PITCH_270 for mavlink
                     #  rangefinder, represents downward facing orientation
-                    mavutil.mavlink.MAV_SENSOR_ROTATION_PITCH_270, 
+                    mavutil.mavlink.MAV_SENSOR_ROTATION_PITCH_270,
                     0		#Covariance, Not used
                 )
                 vehicle.send_mavlink(msg)
@@ -757,7 +760,7 @@ if __name__ == "__main__":
 
     pixracer = SerialInterface("/dev/serial0")
     if IS_UAV:
-        import dronekit as dk 
+        import dronekit as dk
         from pymavlink import mavutil
         rf_comm1, rf_comm2 = Pipe()
         range_finder_process = RangeFinderProcess(rf_comm2)
@@ -791,7 +794,7 @@ if __name__ == "__main__":
             if DEBUG: print('Position not ready yet. Waiting.')
             time.sleep(0.1)
             continue
-        
+
         status = ""
         if state and (pos.x, pos.y, pos.z) != (state['x'], state['y'], state['z']):
             status += f"POS: x(mm):{pos.x} y(mm):{pos.y} z(mm):{pos.z}"
@@ -831,4 +834,3 @@ if __name__ == "__main__":
 
         # Write data out to the memcache so that other programs can read it
         memcached_client.set('state', json.dumps(state))
-

@@ -10,7 +10,7 @@ from Search import Astar, reconstruct_path
 
 def main():
     # Create a 2D environment
-    env = XYEnvironment(x_size=10, y_size=10, x_pts=30, y_pts=30)
+    env = XYEnvironment(x_size=10, y_size=10, n_grid_x=30, n_grid_y=30)
 
     # Create and add some threats to a field
     threat1 = GaussThreat(location=(2, 2), shape=(0.5, 0.5), intensity=5)
