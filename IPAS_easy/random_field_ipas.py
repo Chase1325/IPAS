@@ -1,10 +1,12 @@
 import random as r
 import matplotlib.pyplot as plt
 
-from IPAS_easy import Environment as Env
-from IPAS_easy import Threat
-from IPAS_easy.Visualize import draw_threat_field_2D
-
+#from IPAS_easy import Environment as Env
+#from IPAS_easy import Threat
+#from IPAS_easy.Visualize import draw_threat_field_2D
+import Environment as Env
+import Threat
+from Visualize import draw_threat_field_2D
 
 ### Generate a Random Threatfield
 
