@@ -30,7 +30,7 @@ def rf(shape, elements):
     return field
 
 if __name__ == "__main__":
-    field = rf((1080,1920), 1)
+    field = rf((2160,3840), 1)
     #cmap = LinearSegmentedColormap.from_list('mycmap', ['#0D0887', '#C5407E', '#f0f724'])
     #plt.imshow(field, cmap=cmap, interpolation='nearest')
     plt.imshow(field, cmap=plt.get_cmap('plasma'), interpolation='nearest')

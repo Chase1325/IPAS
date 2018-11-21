@@ -8,7 +8,7 @@ import copy
 
 def get_average_color_of_frame(file, offset=(), size=(40, 40)):
     """
-    Given an open file of an image, crop to offset and size 
+    Given an open file of an image, crop to offset and size
     and then find the average color of cropped image.
     """
     image = Image.open(file)  # open image
@@ -16,7 +16,7 @@ def get_average_color_of_frame(file, offset=(), size=(40, 40)):
     width = image.size[0]
     height = image.size[1]
 
-    if not offset: 
+    if not offset:
         offset = (
             width // 2 - size[0] // 2,
             height // 2 - size[1] // 2

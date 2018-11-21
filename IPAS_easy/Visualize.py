@@ -39,7 +39,7 @@ def draw_threat_field(env, threat_field, x_res=100, y_res=100, colorbar=True):
     return ax
 
 
-def draw_threat_field_2D(env, threat_field, ax=None, x_res=100, y_res=100, colorbar=True):
+def draw_threat_field_2D(env, threat_field, ax=None, x_res=500, y_res=500, colorbar=True):
     """Draw a 2D threat field and return an axis object to further modify plot
 
     ax_2d = draw_threat_field_2D(env=env, threat_field=threat_field)

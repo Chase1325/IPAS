@@ -39,4 +39,5 @@ if __name__ == '__main__':
     plt.show()
     plt.draw()
     fig1.tight_layout()
-    fig1.savefig('C:\RESEARCH\Code\IPAS\Figs\my_fig.png', dpi=400, bbox_inches='tight', pad_inches=0)
+    #fig1.savefig('C:\RESEARCH\Code\IPAS\Figs\my_fig.png', dpi=400, bbox_inches='tight', pad_inches=0)
+    fig1.savefig('C:\RESEARCH\Code\IPAS\Figs\my_fig.png', dpi=1000, bbox_inches='tight', pad_inches=0)

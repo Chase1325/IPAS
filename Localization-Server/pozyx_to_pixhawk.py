@@ -25,8 +25,6 @@ from pozyx2gps import Pozyx2GPSConverter
 
 #RUN THIS FILE AS THE MAIN FOR DRONE
 
-
-
 DEBUG = False
 
 LOG_DIR = '/home/pi/localization-logs'
