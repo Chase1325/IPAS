@@ -25,6 +25,13 @@ from pozyx2gps import Pozyx2GPSConverter
 
 #RUN THIS FILE AS THE MAIN FOR DRONE
 
+#Ensure only localization is the issue. GPS Test
+#Quantify the z axis localization error. Pozyx vs Rangefinder. Take log, find the mean and the variance.
+#Control the velocities of the x, y, z movements. Then can do feedback controllerself.
+#Do feedback control.
+
+
+
 DEBUG = False
 
 LOG_DIR = '/home/pi/localization-logs'
@@ -767,6 +774,7 @@ if __name__ == "__main__":
     gps_converter = Pozyx2GPSConverter()
 
     memcached_client = Client(('localhost', 11211))
+
 
     pozyx_waki, pozyx_taki = Pipe()  # :D
     pozyx_pos_process = PozyxPositionProcess(pozyx_taki, deepcopy(ANCHORS), IS_UAV, args.postimeout)
