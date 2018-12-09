@@ -68,7 +68,7 @@ for k in range(1,4):
         #ax.plot3D(*zip(s, e), color="b")
 
 locTable = []
-tolerance = 100
+tolerance = 50
 
 for k in z_range:
     for j in xy_range:
@@ -81,36 +81,49 @@ for i in range(27):
     fig = plt.figure(i)
 
     ax = fig.add_subplot(1,2,1, projection='3d')
+
+    trueX = locTable[i][0]
+    trueY = locTable[i][1]
+    trueZ = locTable[i][2]
+
+    estX = meanTable[i][0]
+    estY = meanTable[i][1]
+    estZ = meanTable[i][2]
+
+    sX = stdTable[i][0]
+    sY = stdTable[i][1]
+    sZ = stdTable[i][2]
+
     #ax.set_aspect("equal")
-    #ax.set_xlim3d(0,3050)
-    #ax.set_ylim3d(0,3050)
-    #ax.set_zlim3d(0,3050)
+    ax.set_xlim3d(,3050)
+    ax.set_ylim3d(0,3050)
+    ax.set_zlim3d(0,3050)
 
     #Estimated Sphere
     u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
-    x = stdTable[i][0]*np.cos(u)*np.sin(v)+meanTable[i][0]
-    y = stdTable[i][1]*np.sin(u)*np.sin(v)+meanTable[i][1]
-    z = stdTable[i][2]*np.cos(v)+meanTable[i][2]
+    x = sX*np.cos(u)*np.sin(v)+estX
+    y = sY*np.sin(u)*np.sin(v)+estY
+    z = sZ*np.cos(v)+estZ
     ax.plot_surface(x, y, z, color='r',alpha=0.5)
 
     #Actual Sphere
     u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
-    x = tolerance*np.cos(u)*np.sin(v)+locTable[i][0]
-    y = tolerance*np.sin(u)*np.sin(v)+locTable[i][1]
-    z = tolerance*np.cos(v)+locTable[i][2]
+    x = tolerance*np.cos(u)*np.sin(v)+trueX
+    y = tolerance*np.sin(u)*np.sin(v)+trueY
+    z = tolerance*np.cos(v)+trueZ
     ax.plot_surface(x, y, z, color='b',alpha=0.5)
 
     #Arrow from Actual centre to Estimated Centre
-    a = Arrow3D([locTable[i][0], meanTable[i][0]], [locTable[i][1], meanTable[i][1]],
-                [locTable[i][2], meanTable[i][2]], mutation_scale=20,
+    a = Arrow3D([trueX, estX], [trueY, estY],
+                [trueZ, estZ], mutation_scale=20,
             lw=2, arrowstyle="-|>", color="g")
     ax.add_artist(a)
 
     #Draw Dots for Origins
     #True Center
-    ax.scatter(locTable[i][0],locTable[i][1],locTable[i][2],color='b')
+    ax.scatter(trueX,trueY,trueZ,color='b')
     #Estimate Center
-    ax.scatter(meanTable[i][0],meanTable[i][1],meanTable[i][2],color='r')
+    ax.scatter(estX,estY,estZ,color='r')
 
     #Draw estimated values Scatter
     for k in range(250):
@@ -121,14 +134,14 @@ for i in range(27):
 
     #Estimated Circle
     u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
-    x = stdTable[i][0]*np.cos(u)*np.sin(v)+meanTable[i][0]
-    y = stdTable[i][1]*np.sin(u)*np.sin(v)+meanTable[i][1]
+    x = sX*np.cos(u)*np.sin(v)+estX
+    y = sY*np.sin(u)*np.sin(v)+estY
     ax.plot(x, y, color='r')
 
     #Actual Circle
     u, v = np.mgrid[0:2*np.pi:20j, 0:np.pi:10j]
-    x = tolerance*np.cos(u)*np.sin(v)+locTable[i][0]
-    y = tolerance*np.sin(u)*np.sin(v)+locTable[i][1]
+    x = tolerance*np.cos(u)*np.sin(v)+trueX
+    y = tolerance*np.sin(u)*np.sin(v)+trueY
     ax.plot(x, y, color='b')
 
     #Draw Measured Data Points
@@ -136,8 +149,8 @@ for i in range(27):
         ax.scatter(dataTable[i]['X pos'][k],dataTable[i]['Y pos'][k],
                    color = 'k', alpha = 0.25)
 
-    ax.arrow(locTable[i][0],locTable[i][1],meanTable[i][0]-locTable[i][0],
-             meanTable[i][1]-locTable[i][1], color='g')
+    ax.arrow(trueX,trueY,estX-trueX,
+             estY-trueY, color='g')
 
 
 plt.show()
