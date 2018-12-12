@@ -25,12 +25,12 @@ from pozyx2gps import Pozyx2GPSConverter
 
 #RUN THIS FILE AS THE MAIN FOR DRONE
 
-#Ensure only localization is the issue. GPS Test
-#Quantify the z axis localization error. Pozyx vs Rangefinder. Take log, find the mean and the variance.
-#Control the velocities of the x, y, z movements. Then can do feedback controllerself.
-#Do feedback control.
-
-
+#1) Fix internet connectivity/hostname problems
+#2) Drone hover test in lab.
+#3) Ensure only localization is the issue. GPS Test outside
+#4) Quantify the z axis localization error. Pozyx vs Rangefinder. Take log, find the mean and the variance.
+#5) Figure out how to control the velocities of the x, y, z movements on Pixracer.
+#6) Do feedback control with x,y,z,x',y',z'.
 
 DEBUG = False
 
@@ -753,8 +753,8 @@ if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM)
     GPIO.setwarnings(False)
 
-    x = args.x if args.x else 14600
-    y = args.y if args.y else 11100
+    x = args.x if args.x else 2875
+    y = args.y if args.y else 2875
 
     ANCHORS = [
         DeviceCoordinates(0x6110, 1, Coordinates(0, 0, 1455)),
@@ -770,6 +770,7 @@ if __name__ == "__main__":
         rf_comm1, rf_comm2 = Pipe()
         range_finder_process = RangeFinderProcess(rf_comm2)
         range_finder_process.start()
+
 
     gps_converter = Pozyx2GPSConverter()
 
