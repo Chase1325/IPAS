@@ -11,7 +11,6 @@ import math as math
 import pandas as pd
 from shapely.geometry.point import Point
 from shapely import affinity
-#import plotly.plotly as py
 from matplotlib.backends.backend_pdf import PdfPages as pdf
 
 class Arrow3D(FancyArrowPatch):
@@ -30,12 +29,8 @@ class Arrow3D(FancyArrowPatch):
 def create_ellipse(center, lengths):
     circ = Point(center).buffer(1)
     ell = affinity.scale(circ, int(lengths[0]), int(lengths[1]))
-    #ellr = affinity.rotate(ell, angle)
     return ell
 
-
-#with open("C:/Users/clstl/Desktop/LocalizationTests/localizationTest-2-2-1.csv", 'r') as file:
-#    data = list(csv.reader(file))
 dataTable = []
 meanTable = []
 varTable = []
