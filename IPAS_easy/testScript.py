@@ -77,7 +77,7 @@ def main():
                 print(threats[i])
                 print(f"{x},{y},{shape},{intensity}", file=outfile)
             # Force away from outside edge
-            threats.append(Threat.GaussThreat(location=(1, args.y - 1), shape=(1, 1), intensity=40))
+            #threats.append(Threat.GaussThreat(location=(1, args.y - 1), shape=(1, 1), intensity=40))
             print(f"1,{args.y-1},1,40", file=outfile)
 
     threat_field = Threat.GaussThreatField(threats=threats, offset=0)
