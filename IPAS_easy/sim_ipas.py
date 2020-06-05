@@ -5,11 +5,10 @@ import Graph
 import numpy as np
 import scipy.signal as sg
 import random
-from requests_futures.sessions import FuturesSession
 
 
 class Measurement():
-    def __init__(self, position, value, noise = 0):
+    def __init__(self, position, value, noise=0):
         self.position = position
         self.value = value
         self.noise = noise
@@ -17,7 +16,7 @@ class Measurement():
 
     def __str__(self):
         return f"Measurement: {self.position} {self.value}"
-        
+
 
 class IPAS():
     def __init__(self, environment, sensor_addrs, sensor_noise=0, start_pt=(0,0), end_pt=None, position_converter=None, wait_to_continue=False):
@@ -251,7 +250,7 @@ class Communications:
     def __init__(self, addrs, ipas2pozyx):
         self.sensor_addrs = addrs
         self.ipas2pozyx = ipas2pozyx
-    
+
     def send_positions_to_sensors(self, positions):
         session = FuturesSession()
 
@@ -269,4 +268,3 @@ class Communications:
             measurements.append(Measurement(positions[n], threat))
             print(measurements[-1])
         return measurements
-

@@ -44,7 +44,7 @@ def main():
             Threat.GaussThreat(location=(10,5), shape=(1, 1), intensity=20),
         ]
     elif args.lastfield:
-        with open('C:\RESEARCH\Code\IPAS\CSV\last_threat_field.csv', 'r') as file:
+        with open('last_threat_field.csv', 'r') as file:
             for line in file:
                 values = line.split(',')
                 x = int(values[0])
@@ -60,7 +60,7 @@ def main():
                 )
                 print(threats[-1])
     else:
-        with open('C:\RESEARCH\Code\IPAS\CSV\last_threat_field.csv', 'w') as outfile:
+        with open('last_threat_field.csv', 'w') as outfile:
             for i in range(args.threats):
                 min_dim = min(args.x, args.y)
                 x = r.randint(0, args.x)
@@ -90,7 +90,7 @@ def main():
 
     draw_threat_field_2D(env, threat_field, ax, colorbar=False)
 
-    with open('C:\RESEARCH\Code\IPAS\Figs\my_fig.png', 'wb') as outfile:
+    with open('my_fig.png', 'wb') as outfile:
         fig.canvas.print_png(outfile)
 
     path = None
@@ -125,7 +125,7 @@ def main():
     if args.optimal:
         draw_path(ax, AstarPath(env, (0,0), (args.x, args.y)), color='yellow')
 
-    with open('C:\RESEARCH\Code\IPAS\Figs\my_fig_path.png', 'wb') as outfile:
+    with open('my_fig_path.png', 'wb') as outfile:
         plt.gcf().canvas.print_png(outfile)
 
     plt.show()
