@@ -28,7 +28,6 @@ class IPAS():
         self.latest_estimate = [0 for i in range(len(self.environment.threat_field.threats))]
         self.threat_locations = []
         self.threat_shapes = []
-        
         self.true_threats = []
         self.comms = Communications(sensor_addrs, position_converter)
         for i in range(len(self.environment.threat_field.threats)):
